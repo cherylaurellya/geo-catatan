@@ -1,16 +1,66 @@
 # geo_catatan
 
-A new Flutter project.
+A.Membuat Project Baru
+flutter create geo_catatan
 
-## Getting Started
+B.Menambahkan Depedency pada file pubspec.yaml
+geolocator: ^11.0.0
+geocoding: ^3.0.0
+flutter_map: ^6.1.0
+latlong2: ^0.9.0
+shared_preferences: ^2.2.2
 
-This project is a starting point for a Flutter application.
+Lalu flutter pub get
 
-A few resources to get you started if this is your first Flutter project:
+4.Pengaturan Permission Android pada 
+android/app/src/main/Androidfest.xaml
+Tambahkan permission sebelum bagian <application>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+5.Membuat model di lib/catatan_model.dart
+import 'package:latlong2/latlong.dart';
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+class CatatanModel {
+  final LatLng position;
+  final String note;
+  final String address;
+  final String type;
+
+  CatatanModel({
+    required this.position,
+    required this.note,
+    required this.address,
+    required this.type,
+  });
+  
+
+  // no1
+  Map<String, dynamic> toJson() {
+    return {
+      'lat': position.latitude,
+      'long': position.longitude,
+      'note': note,
+      'address': address,
+      'type': type,
+    };
+  }
+
+  factory CatatanModel.fromJson(Map<String, dynamic> json) {
+    return CatatanModel(
+      position: LatLng(json['latitude'], json['longitude']), 
+      note:json['note'], 
+      address: json['address'],
+      type: json['type'],
+      );
+  }
+}
+
+Dokumentasi
+
+![](./Dokumentasi/geo_catatan1.jpeg)
+
+![](./Dokumentasi/geo_catatan2.jpeg)
+
+
